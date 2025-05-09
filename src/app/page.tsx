@@ -132,7 +132,10 @@ export default function Home() {
         canvasRef.current.width = canvasDimensionsRef.current.width;
         canvasRef.current.height = canvasDimensionsRef.current.height;
       }
-      initializeDrops();
+      const newColumns = Math.floor(window.innerWidth / canvasDimensionsRef.current.fontSize);
+      if (newColumns !== canvasDimensionsRef.current.columns) {
+        initializeDrops();
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -149,11 +152,11 @@ export default function Home() {
         ref={canvasRef}
         style={{ display: "block", background: "#000" }}
       />
-      <div className="absolute top-4 right-4 z-10 p-3 bg-black bg-opacity-60 rounded-lg text-white font-[family-name:var(--font-geist-mono)] shadow-lg flex flex-col gap-4">
-        <div>
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-2 sm:p-3 bg-black bg-opacity-60 rounded-lg text-white font-[family-name:var(--font-geist-mono)] shadow-lg flex flex-col gap-2 sm:gap-3 w-auto">
+        <div className="w-32 sm:w-36 md:w-40">
           <label
             htmlFor="speedSlider"
-            className="block text-sm mb-1 select-none"
+            className="block text-xs sm:text-sm mb-1 select-none"
           >
             Speed: {(sliderValue / 100).toFixed(1)}x
           </label>
@@ -164,13 +167,13 @@ export default function Home() {
             max="300"
             value={sliderValue}
             onChange={(e) => setSliderValue(Number(e.target.value))}
-            className="w-32 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500"
+            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500"
           />
         </div>
-        <div>
+        <div className="w-32 sm:w-36 md:w-40">
           <label
             htmlFor="colorPicker"
-            className="block text-sm mb-1 select-none"
+            className="block text-xs sm:text-sm mb-1 select-none"
           >
             Color:
           </label>
@@ -179,37 +182,45 @@ export default function Home() {
             id="colorPicker"
             value={characterColor}
             onChange={(e) => setCharacterColor(e.target.value)}
-            className="w-full h-8 p-0 border-none rounded cursor-pointer bg-gray-700"
+            className="w-full h-7 sm:h-8 p-0 border-none rounded cursor-pointer bg-gray-700"
             disabled={isRgbMode}
           />
         </div>
-        <div>
+        <div className="w-32 sm:w-36 md:w-40">
           <button
             onClick={() => setIsRgbMode(!isRgbMode)}
-            className={`w-full px-3 py-2 text-sm rounded-md transition-colors ${
+            className={`w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md transition-colors ${
               isRgbMode
                 ? "bg-pink-600 hover:bg-pink-700"
                 : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
-            {isRgbMode ? "Disable RGB Mode" : "Enable RGB Mode"}
+            {isRgbMode ? "Disable RGB" : "Enable RGB"}
           </button>
         </div>
-        <div>
+        <div className="w-32 sm:w-36 md:w-40">
           <button
             onClick={() => setIsFallingDown(!isFallingDown)}
-            className="w-full px-3 py-2 text-sm rounded-md bg-transparent hover:bg-gray-700/50 border border-gray-600/50 transition-colors"
+            className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-md bg-transparent hover:bg-gray-700/50 border border-gray-600/50 transition-colors"
             title="Toggle Rain Direction"
           >
-            {isFallingDown ? "Make Rain Go Up ↑" : "Make Rain Go Down ↓"}
+            {isFallingDown ? "Rain Up ↑" : "Rain Down ↓"}
           </button>
         </div>
-        <div>
+        <div className="w-32 sm:w-36 md:w-40">
           <Link
             href="/lorem"
-            className="block w-full px-3 py-2 text-sm text-center rounded-md bg-purple-600 hover:bg-purple-700 transition-colors"
+            className="block w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-center rounded-md bg-purple-600 hover:bg-purple-700 transition-colors"
           >
-            Go to Lorem Page
+            About
+          </Link>
+        </div>
+        <div className="w-32 sm:w-36 md:w-40">
+          <Link
+            href="/chars"
+            className="block w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm text-center rounded-md bg-teal-600 hover:bg-teal-700 transition-colors"
+          >
+            CharCam
           </Link>
         </div>
       </div>
